@@ -38,7 +38,8 @@ resource "aws_cloudwatch_dashboard" "lambda_dashbaord" {
             "height": 6,
             "properties": {
                 "metrics": [
-                    [ "LogMetrics", "chainTweet", { "label": "Chain Tweets", "stat": "Sum" } ]
+                    [ "LogMetrics", "chainTweet", { "label": "Chain Tweets", "stat": "Sum" } ],
+                    [ "LogMetrics", "${aws_cloudwatch_log_metric_filter.totalTweetMetricFilter.name}", { "label": "Total Tweets", "stat": "Sum" } ]
                 ],
                 "view": "timeSeries",
                 "stacked": false,
