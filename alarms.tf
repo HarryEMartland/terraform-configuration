@@ -19,7 +19,7 @@ resource "aws_cloudwatch_metric_alarm" "too_many_tweets" {
   metric_name               = "foundTweets"
   namespace                 = "LogMetrics"
   period                    = "3600"
-  statistic                 = "Max"
+  statistic                 = "Maximum"
   threshold                 = "100"
   alarm_description         = "If there are too many tweets the function will miss some"
   alarm_actions = ["arn:aws:sns:eu-west-1:818032293643:Alarms"]
