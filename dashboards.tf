@@ -1,5 +1,5 @@
 resource "aws_cloudwatch_dashboard" "lambda_dashbaord" {
-  dashboard_name = "Lambda Dashboard"
+  dashboard_name = "Lambda-Dashboard"
 
   dashboard_body = <<EOF
  {
