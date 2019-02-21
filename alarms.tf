@@ -1,6 +1,6 @@
 
 resource "aws_cloudwatch_metric_alarm" "lambda_errors" {
-  alarm_name                = "lambda_errors"
+  alarm_name                = "Lambda Errors"
   comparison_operator       = "GreaterThanThreshold"
   evaluation_periods        = "1"
   metric_name               = "Errors"
