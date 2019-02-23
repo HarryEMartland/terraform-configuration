@@ -37,12 +37,13 @@ resource "aws_iam_user_policy" "lambda-deploys" {
       "Resource": ["arn:aws:lambda:eu-west-1:818032293643:function:${var.lambdas[count.index]}"]
     },{
       "Action": ["iam:PassRole"],
-      "Effect": "Allow"
+      "Effect": "Allow",
+      "Resources": ["*"]
     }
   ]
 }
 EOF
-} #todo create function and limit the passrole
+} #todo create role and limit the passrole
 
 resource "aws_iam_access_key" "lambda-deploys" {
   user = "lambda-deploy-${var.lambdas[count.index]}"
