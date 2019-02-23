@@ -19,10 +19,6 @@ resource "aws_iam_user" "lambda-deploys" {
   tags = { tag-key = "lambda-deploy" }
 }
 
-resource "aws_iam_role" "lambda" {
-  assume_role_policy = "generic-lambda"
-}
-
 resource "aws_iam_user_policy" "lambda-deploys" {
   name = "lambda-deploy-${var.lambdas[count.index]}"
   user = "${aws_iam_user.lambda-deploys.*.name[count.index]}"
@@ -38,16 +34,16 @@ resource "aws_iam_user_policy" "lambda-deploys" {
         "lambda:UpdateFunctionConfiguration"
       ],
       "Effect": "Allow",
-      "Resource": ["arn:aws:lambda:eu-west-1:818032293643:function:${var.lambdas[count.index]}"]
+      "Resource": ["arn:aws:lambda:eu-west-1:${var.account_id}:function:${var.lambdas[count.index]}"]
     },{
       "Action": ["iam:PassRole"],
       "Effect": "Allow",
-      "Resource": ["*"]
+      "Resource": ["arn:aws:iam::${var.account_id}:role/${var.lambdas[count.index]}"]
     }
   ]
 }
 EOF
-} #todo create role and limit the passrole
+}
 
 resource "aws_iam_access_key" "lambda-deploys" {
   user = "lambda-deploy-${var.lambdas[count.index]}"

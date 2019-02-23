@@ -6,6 +6,10 @@ variable "aws_region" {
   default = "eu-west-1"
 }
 
+variable "account_id" {
+  default = "818032293643"
+}
+
 provider "aws" {
   region = "${var.aws_region}"
 }
