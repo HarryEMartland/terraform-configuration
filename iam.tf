@@ -16,6 +16,7 @@ resource "aws_iam_user_policy_attachment" "test-attach" {
 resource "aws_iam_user" "lambda-deploys" {
   name = "lambda-deploy-${var.lambdas[count.index]}"
   count = "${length(var.lambdas)}"
+  tags = { tag-key = "lambda-deploy" }
 }
 
 resource "aws_iam_user_policy" "lambda-deploys" {
