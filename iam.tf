@@ -64,7 +64,7 @@ resource "aws_iam_role" "HarryBotRetweet" {
                 "logs:CreateLogStream",
                 "logs:PutLogEvents"
             ],
-            "Resource": "arn:aws:logs:*:*:*"
+            "Resource": ["arn:aws:logs:*:*:*"]
         }
     ]
 }
