@@ -86,7 +86,7 @@ resource "aws_iam_policy" "generic-lambda-logs" {
                 "logs:PutLogEvents"
             ],
             "Resource": [
-                "arn:aws:logs:*:*:*"
+                "arn:aws:logs:${var.aws_region}:${var.account_id}:/aws/lambda/${var.lambdas[count.index]}"
             ]
         }
     ]
