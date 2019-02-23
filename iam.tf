@@ -19,6 +19,10 @@ resource "aws_iam_user" "lambda-deploys" {
   tags = { tag-key = "lambda-deploy" }
 }
 
+resource "aws_iam_role" "lambda" {
+  assume_role_policy = "generic-lambda"
+}
+
 resource "aws_iam_user_policy" "lambda-deploys" {
   name = "lambda-deploy-${var.lambdas[count.index]}"
   user = "${aws_iam_user.lambda-deploys.*.name[count.index]}"
@@ -38,7 +42,7 @@ resource "aws_iam_user_policy" "lambda-deploys" {
     },{
       "Action": ["iam:PassRole"],
       "Effect": "Allow",
-      "Resources": ["*"]
+      "Resource": ["*"]
     }
   ]
 }
