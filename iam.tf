@@ -51,7 +51,7 @@ resource "aws_iam_access_key" "lambda-deploys" {
 }
 
 resource "aws_iam_role" "HarryBotRetweet" {
-  name = "${var.lambdas[count.index]}"
+  name = "lambda-${var.lambdas[count.index]}"
   count = "${length(var.lambdas)}"
   assume_role_policy = <<EOF
 {
