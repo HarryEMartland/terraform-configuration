@@ -55,6 +55,26 @@ resource "aws_iam_role" "HarryBotRetweet" {
 
   assume_role_policy = <<EOF
 {
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_policy" "HarryBotRetweet" {
+  name        = "HarryBotRetweet"
+  description = "HarryBotRetweet allow logging"
+  policy = <<EOF
+{
     "Version": "2012-10-17",
     "Statement": [
         {
@@ -64,9 +84,21 @@ resource "aws_iam_role" "HarryBotRetweet" {
                 "logs:CreateLogStream",
                 "logs:PutLogEvents"
             ],
-            "Resource": ["arn:aws:logs:*:*:*"]
+            "Resource": [
+                "arn:aws:logs:*:*:*"
+            ]
         }
     ]
 }
 EOF
+}
+
+resource "aws_iam_role_policy_attachment" "HarryBotRetweet-logs" {
+  policy_arn = "${aws_iam_policy.HarryBotRetweet.arn}"
+  role = "${aws_iam_role.HarryBotRetweet.arn}"
+}
+
+resource "aws_iam_role_policy_attachment" "HarryBotRetweet-comprehend" {
+  policy_arn = "${aws_iam_policy.HarryBotRetweet.arn}"
+  role = "arn:aws:iam::aws:policy/ComprehendReadOnly"
 }
