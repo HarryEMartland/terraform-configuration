@@ -40,6 +40,6 @@ EOF
 }
 
 resource "aws_iam_access_key" "lambda-deploys" {
-  user = "lambda-peploy-${var.lambdas[count.index]}"
+  user = "lambda-deploy-${var.lambdas[count.index]}"
   count = "${length(var.lambdas)}"
 }
