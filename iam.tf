@@ -52,7 +52,6 @@ resource "aws_iam_access_key" "lambda-deploys" {
 
 resource "aws_iam_role" "HarryBotRetweet" {
   name = "HarryBotRetweet"
-
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -95,10 +94,10 @@ EOF
 
 resource "aws_iam_role_policy_attachment" "HarryBotRetweet-logs" {
   policy_arn = "${aws_iam_policy.HarryBotRetweet.arn}"
-  role = "${aws_iam_role.HarryBotRetweet.arn}"
+  role = "${aws_iam_role.HarryBotRetweet.name}"
 }
 
 resource "aws_iam_role_policy_attachment" "HarryBotRetweet-comprehend" {
-  policy_arn = "${aws_iam_policy.HarryBotRetweet.arn}"
-  role = "arn:aws:iam::aws:policy/ComprehendReadOnly"
+  policy_arn = "arn:aws:iam::aws:policy/ComprehendReadOnly"
+  role = "${aws_iam_role.HarryBotRetweet.name}"
 }
