@@ -49,3 +49,24 @@ resource "aws_iam_access_key" "lambda-deploys" {
   user = "lambda-deploy-${var.lambdas[count.index]}"
   count = "${length(var.lambdas)}"
 }
+
+resource "aws_iam_role" "HarryBotRetweet" {
+  name = "HarryBotRetweet"
+
+  assume_role_policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+            ],
+            "Resource": "arn:aws:logs:*:*:*"
+        }
+    ]
+}
+EOF
+}
