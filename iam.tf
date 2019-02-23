@@ -51,7 +51,8 @@ resource "aws_iam_access_key" "lambda-deploys" {
 }
 
 resource "aws_iam_role" "HarryBotRetweet" {
-  name = "HarryBotRetweet"
+  name = "${var.lambdas[count.index]}"
+  count = "${length(var.lambdas)}"
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -70,8 +71,9 @@ EOF
 }
 
 resource "aws_iam_policy" "HarryBotRetweet" {
-  name        = "HarryBotRetweet"
-  description = "HarryBotRetweet allow logging"
+  name = "${var.lambdas[count.index]}"
+  count = "${length(var.lambdas)}"
+  description = "Allow the lambda function ${var.lambdas[count.index]} to log"
   policy = <<EOF
 {
     "Version": "2012-10-17",
@@ -93,11 +95,12 @@ EOF
 }
 
 resource "aws_iam_role_policy_attachment" "HarryBotRetweet-logs" {
-  policy_arn = "${aws_iam_policy.HarryBotRetweet.arn}"
-  role = "${aws_iam_role.HarryBotRetweet.name}"
+  policy_arn = "${aws_iam_policy.HarryBotRetweet.*.arn[count.index]}"
+  role = "${aws_iam_role.HarryBotRetweet.*.name[count.index]}"
+  count = "${length(var.lambdas)}"
 }
 
 resource "aws_iam_role_policy_attachment" "HarryBotRetweet-comprehend" {
   policy_arn = "arn:aws:iam::aws:policy/ComprehendReadOnly"
-  role = "${aws_iam_role.HarryBotRetweet.name}"
+  role = "${aws_iam_role.HarryBotRetweet.*.name[1]}"
 }
