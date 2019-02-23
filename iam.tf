@@ -50,6 +50,26 @@ resource "aws_iam_access_key" "lambda-deploys" {
   count = "${length(var.lambdas)}"
 }
 
+resource "aws_iam_role" "lambda" {
+  name = "lambda-${var.lambdas[count.index]}"
+  count = "${length(var.lambdas)}"
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
+}
+
 resource "aws_iam_policy" "lambda-log" {
   name = "lambda-log-${var.lambdas[count.index]}"
   count = "${length(var.lambdas)}"
@@ -70,26 +90,6 @@ resource "aws_iam_policy" "lambda-log" {
             ]
         }
     ]
-}
-EOF
-}
-
-resource "aws_iam_role" "lambda" {
-  name = "lambda-${var.lambdas[count.index]}"
-  count = "${length(var.lambdas)}"
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      },
-      "Effect": "Allow",
-      "Sid": ""
-    }
-  ]
 }
 EOF
 }
