@@ -50,3 +50,57 @@ resource "aws_iam_access_key" "lambda-deploys" {
   count = "${length(var.lambdas)}"
 }
 
+resource "aws_iam_role" "generic-lambda" {
+  name = "lambda-${var.lambdas[count.index]}"
+  count = "${length(var.lambdas)}"
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_policy" "generic-lambda-logs" {
+  name = "${var.lambdas[count.index]}"
+  count = "${length(var.lambdas)}"
+  description = "Allow the lambda function ${var.lambdas[count.index]} to log"
+  policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+            ],
+            "Resource": [
+                "arn:aws:logs:*:*:*"
+            ]
+        }
+    ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "generic-lambda-logs" {
+  policy_arn = "${aws_iam_policy.generic-lambda-logs.*.arn[count.index]}"
+  role = "${aws_iam_role.generic-lambda.*.name[count.index]}"
+  count = "${length(var.lambdas)}"
+}
+
+resource "aws_iam_role_policy_attachment" "HarryBotRetweet-comprehend" {
+  policy_arn = "arn:aws:iam::aws:policy/ComprehendReadOnly"
+  role = "${aws_iam_role.generic-lambda.*.name[1]}"
+}
