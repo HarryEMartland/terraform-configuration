@@ -38,7 +38,7 @@ resource "aws_iam_user_policy" "lambda-deploys" {
     },{
       "Action": ["iam:PassRole"],
       "Effect": "Allow",
-      "Resource": ["arn:aws:iam::${var.account_id}:role/${var.lambdas[count.index]}"]
+      "Resource": ["${aws_iam_role.generic-lambda.*.arn[count.index]}"]
     }
   ]
 }
