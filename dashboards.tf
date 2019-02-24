@@ -18,7 +18,7 @@ resource "aws_cloudwatch_dashboard" "lambda_dashbaord" {
                 "stacked": false,
                 "region": "eu-west-1",
                 "title": "Found Tweets",
-                "period": 300,
+                "period": 3600,
                 "yAxis": {
                     "left": {
                         "showUnits": false,
@@ -46,7 +46,7 @@ resource "aws_cloudwatch_dashboard" "lambda_dashbaord" {
                 "stacked": false,
                 "region": "eu-west-1",
                 "title": "Sent Tweets",
-                "period": 300,
+                "period": 3600,
                 "yAxis": {
                     "left": {
                         "showUnits": true,
@@ -72,7 +72,7 @@ resource "aws_cloudwatch_dashboard" "lambda_dashbaord" {
                 "stacked": false,
                 "region": "eu-west-1",
                 "title": "Lambda Errors",
-                "period": 300
+                "period": 3600
             }
         }
     ]
