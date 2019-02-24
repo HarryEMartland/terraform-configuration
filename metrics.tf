@@ -7,7 +7,7 @@ resource "aws_cloudwatch_log_metric_filter" "totalTweetMetricFilter" {
   metric_transformation {
     name      = "totalTweet"
     namespace = "LogMetrics"
-    value     = "$.tweetCount"
+    value     = "$.totalTweet"
   }
 }
 
