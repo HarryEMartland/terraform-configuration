@@ -3,6 +3,7 @@ resource "aws_cloudwatch_dashboard" "lambda_dashbaord" {
 
   dashboard_body = <<EOF
  {
+    "start": "-PT24H",
     "widgets": [
         {
             "type": "metric",
