@@ -1,8 +1,10 @@
 
-data "aws_s3_bucket" "music" {
+resource "aws_s3_bucket" "music" {
   bucket = "hm-music"
+  acl    = "private"
 }
 
-data "aws_s3_bucket" "backup" {
+resource "aws_s3_bucket" "backup" {
   bucket = "hm-backup"
+  acl    = "private"
 }
