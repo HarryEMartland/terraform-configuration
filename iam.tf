@@ -94,6 +94,27 @@ resource "aws_iam_policy" "generic-lambda-logs" {
 EOF
 }
 
+resource "aws_iam_policy" "learntocodes-lambda-db-access" {
+  name = "learntocodes-lambda-db-access"
+  description = "Allow learn to codes lambda to access dynamodb"
+  policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:UpdateItem"
+            ],
+            "Resource": [
+                "arn:aws:dynamodb:eu-west-1:818032293643:table/LearnToCodesTwitterBot"
+            ]
+        }
+    ]
+}
+EOF
+}
+
 resource "aws_iam_role_policy_attachment" "generic-lambda-logs" {
   policy_arn = "${aws_iam_policy.generic-lambda-logs.*.arn[count.index]}"
   role = "${aws_iam_role.generic-lambda.*.name[count.index]}"
@@ -103,4 +124,9 @@ resource "aws_iam_role_policy_attachment" "generic-lambda-logs" {
 resource "aws_iam_role_policy_attachment" "HarryBotRetweet-comprehend" {
   policy_arn = "arn:aws:iam::aws:policy/ComprehendReadOnly"
   role = "${aws_iam_role.generic-lambda.*.name[1]}"
+}
+
+resource "aws_iam_role_policy_attachment" "LernToCodes-db-access" {
+  policy_arn = "${aws_iam_policy.learntocodes-lambda-db-access.arn}"
+  role = "${aws_iam_role.generic-lambda.*.name[0]}"
 }
