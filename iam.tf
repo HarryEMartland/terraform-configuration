@@ -1,7 +1,7 @@
 
 variable "lambdas" {
   type = "list"
-  default = ["LearnToCodesTwitterBot","HarryBotRetweet"]
+  default = ["LearnToCodesTwitterBot","HarryBotRetweet", "S3Flack2Mp3"]
 }
 
 resource "aws_iam_user" "read_only" {
