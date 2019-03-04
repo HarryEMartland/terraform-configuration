@@ -31,7 +31,8 @@ resource "aws_iam_user_policy" "lambda-deploys" {
       "Action": [
         "lambda:UpdateFunctionCode",
         "lambda:GetFunction",
-        "lambda:UpdateFunctionConfiguration"
+        "lambda:UpdateFunctionConfiguration",
+        "lambda:CreateFunction"
       ],
       "Effect": "Allow",
       "Resource": ["arn:aws:lambda:eu-west-1:${var.account_id}:function:${var.lambdas[count.index]}"]
