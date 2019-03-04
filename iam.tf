@@ -146,7 +146,7 @@ resource "aws_iam_policy" "S3Flac2mp5-s3-access" {
                 "s3:GetObject"
             ],
             "Resource": [
-                "arn:aws:s3:::harry-martland-music"
+                "arn:aws:s3:::harry-martland-music/*"
             ]
         }
     ]
