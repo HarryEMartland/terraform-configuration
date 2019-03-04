@@ -131,3 +131,30 @@ resource "aws_iam_role_policy_attachment" "LernToCodes-db-access" {
   policy_arn = "${aws_iam_policy.learntocodes-lambda-db-access.arn}"
   role = "${aws_iam_role.generic-lambda.*.name[0]}"
 }
+
+resource "aws_iam_policy" "S3Flac2mp5-s3-access" {
+  name = "S3Flac2mp5-s3-access"
+  description = "Allow S3Flac2Mp3 to read and write to s3"
+  policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:PutObject",
+                "s3:GetObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::harry-martland-music"
+            ]
+        }
+    ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "S3Flac2mp5-s3-access" {
+  policy_arn = "${aws_iam_policy.S3Flac2mp5-s3-access.arn}"
+  role = "${aws_iam_role.generic-lambda.*.name[2]}"
+}
