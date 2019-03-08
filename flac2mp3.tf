@@ -36,6 +36,6 @@ resource "aws_s3_bucket_notification" "bucket_notification" {
   }
 }
 
-resource "aws_sns_topic" "user_updates" {
+data "aws_sqs_queue" "flac2mp3" {
   name = "flac2mp3"
 }
