@@ -33,6 +33,7 @@ resource "aws_iam_policy" "S3Flac2mp5-sqs-access" {
             "Action": [
                 "sqs:ReceiveMessage",
                 "sqs:DeleteMessage",
+                "sqs:GetQueueAttributes",
                 "sqs:SendMessage"
             ],
             "Resource": [
