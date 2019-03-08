@@ -21,8 +21,35 @@ resource "aws_iam_policy" "S3Flac2mp5-s3-access" {
 EOF
 }
 
+resource "aws_iam_policy" "S3Flac2mp5-sqs-access" {
+  name = "S3Flac2mp5-sqs-access"
+  description = "Allow S3Flac2Mp3 to receive and send to sqs queue"
+  policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "sqs:ReceiveMessage",
+                "sqs:SendMessage"
+            ],
+            "Resource": [
+                "arn:aws:sqs:eu-west-1:818032293643:flac2mp3"
+            ]
+        }
+    ]
+}
+EOF
+}
+
 resource "aws_iam_role_policy_attachment" "S3Flac2mp5-s3-access" {
   policy_arn = "${aws_iam_policy.S3Flac2mp5-s3-access.arn}"
+  role = "${aws_iam_role.generic-lambda.*.name[2]}"
+}
+
+resource "aws_iam_role_policy_attachment" "S3Flac2mp5-sqs-access" {
+  policy_arn = "${aws_iam_policy.S3Flac2mp5-sqs-access.arn}"
   role = "${aws_iam_role.generic-lambda.*.name[2]}"
 }
 
