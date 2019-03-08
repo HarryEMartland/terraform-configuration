@@ -32,10 +32,11 @@ resource "aws_iam_policy" "S3Flac2mp5-sqs-access" {
             "Effect": "Allow",
             "Action": [
                 "sqs:ReceiveMessage",
+                "sqs:DeleteMessage",
                 "sqs:SendMessage"
             ],
             "Resource": [
-                "arn:aws:sqs:eu-west-1:818032293643:flac2mp3"
+                "${aws_sqs_queue.flac2mp3.arn}"
             ]
         }
     ]
