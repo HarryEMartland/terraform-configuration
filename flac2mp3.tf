@@ -73,4 +73,5 @@ resource "aws_sqs_queue" "flac2mp3" {
 resource "aws_lambda_event_source_mapping" "flac2mp3-queue" {
   event_source_arn = "${aws_sqs_queue.flac2mp3.arn}"
   function_name    = "arn:aws:lambda:eu-west-1:818032293643:function:S3Flack2Mp3"
+  batch_size = 1
 }
