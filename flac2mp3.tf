@@ -77,7 +77,7 @@ resource "aws_sqs_queue" "flac2mp3" {
       "Effect": "Allow",
       "Principal": "*",
       "Action": "sqs:SendMessage",
-      "Resource": "arn:aws:sqs:*:*:s3-event-notification-queue",
+      "Resource": "arn:aws:sqs:*:*:flac2mp3",
       "Condition": {
         "ArnEquals": { "aws:SourceArn": "${aws_s3_bucket.music.arn}" }
       }
