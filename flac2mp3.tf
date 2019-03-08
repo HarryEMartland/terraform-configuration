@@ -58,10 +58,10 @@ resource "aws_iam_role_policy_attachment" "S3Flac2mp5-sqs-access" {
 resource "aws_s3_bucket_notification" "bucket_notification" {
   bucket = "${aws_s3_bucket.music.id}"
 
-  lambda_function {
-    lambda_function_arn = "arn:aws:lambda:eu-west-1:818032293643:function:S3Flack2Mp3"
-    events              = ["s3:ObjectCreated:*"]
-    filter_suffix       = ".flac"
+  queue {
+    queue_arn     = "${aws_sqs_queue.flac2mp3.arn}"
+    events        = ["s3:ObjectCreated:*"]
+    filter_suffix = ".flac"
   }
 }
 
