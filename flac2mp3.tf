@@ -68,6 +68,7 @@ resource "aws_s3_bucket_notification" "bucket_notification" {
 resource "aws_sqs_queue" "flac2mp3" {
   name                        = "flac2mp3"
   fifo_queue                  = false
+  visibility_timeout_seconds = 60
 }
 
 resource "aws_lambda_event_source_mapping" "flac2mp3-queue" {
