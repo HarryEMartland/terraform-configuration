@@ -69,6 +69,22 @@ resource "aws_sqs_queue" "flac2mp3" {
   name                        = "flac2mp3"
   fifo_queue                  = false
   visibility_timeout_seconds = 60
+  policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "sqs:SendMessage",
+      "Resource": "arn:aws:sqs:*:*:s3-event-notification-queue",
+      "Condition": {
+        "ArnEquals": { "aws:SourceArn": "${aws_s3_bucket.music.arn}" }
+      }
+    }
+  ]
+}
+POLICY
 }
 
 resource "aws_lambda_event_source_mapping" "flac2mp3-queue" {
