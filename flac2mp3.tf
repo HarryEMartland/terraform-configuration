@@ -55,7 +55,7 @@ resource "aws_iam_role_policy_attachment" "S3Flac2mp5-sqs-access" {
   role = "${aws_iam_role.generic-lambda.*.name[2]}"
 }
 
-resource "aws_s3_bucket_notification" "bucket_notification" {
+/*resource "aws_s3_bucket_notification" "bucket_notification" {
   bucket = "${aws_s3_bucket.music.id}"
 
   queue {
@@ -63,7 +63,7 @@ resource "aws_s3_bucket_notification" "bucket_notification" {
     events        = ["s3:ObjectCreated:*"]
     filter_suffix = ".flac"
   }
-}
+}*/
 
 resource "aws_sqs_queue" "flac2mp3" {
   name                        = "flac2mp3"
